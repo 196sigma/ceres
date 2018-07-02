@@ -1,0 +1,17 @@
+{
+    "contents" : "# background.R\n\nre.trim <- function (x){\n  x <- gsub(\"^\\\\s+|\\\\s+$\", \"\", x)\n  x <- gsub(\"[.]\",\"\",x) \n  return(x)\n}\nsetClass(\"Pub\", representation(authors = \"character\", \n                               title=\"character\",\n                               journal=\"character\",\n                               volume=\"numeric\",\n                               date=\"character\",\n                               year=\"integer\",\n                               abstract=\"character\",\n                               issue=\"character\"))\n\nget.authors <- function(aPub){\n  a <- strsplit(aPub@authors, ';')[[1]]\n  return(re.trim(a))\n}\n\nget.category <- function(abstract, silent=TRUE){\n  if(!silent) print(abstract)\n  category <- \"financial\"\n  \n  N.TERMS <- 2\n  n.fin.terms <- 0\n  n.mng.terms <- 0\n  n.audit.terms <- 0\n  n.tax.terms <- 0\n  \n  mng.terms <- c(\"relative performance evaluation\", \"economic value added\", \"activity based\", \"abc\", \"decision making\", \"control\",\"managerial\", \"costing method\", \"performance sensitivit\",\"pay-performance\")\n  tax.terms <- c(\"tax\")\n  audit.terms <- c(\"audit\")\n  \n  #abstract <- X[2, \"abstract\"]\n  abstract.corpus <- Corpus(VectorSource(abstract))\n  abstract.corpus <- tm_map(abstract.corpus, removeNumbers)\n  abstract.corpus <- tm_map(abstract.corpus, removePunctuation)\n  abstract.corpus <- tm_map(abstract.corpus, stripWhitespace)\n  abstract.corpus <- tm_map(abstract.corpus, tolower)\n  abstract.corpus <- tm_map(abstract.corpus, removeWords, stopwords(\"english\")) \n  abstract.corpus <- tm_map(abstract.corpus, stripWhitespace)\n  \n  abstract2 <- unlist(abstract.corpus$content)\n  abstract.tokens <- scan_tokenizer(abstract2)\n  n <- length(abstract.tokens)\n  if(grepl(\"managerial accounting\", abstract)) category <- \"managerial\"\n  if(grepl(\"relative performance\", abstract)) category <- \"managerial\"\n  if(grepl(\"performance sensitivit\", abstract)) category <- \"managerial\"\n  if(grepl(\"economic value add\", abstract)) category <- \"managerial\"\n  if(grepl(\"reporting system\", abstract)) category <- \"managerial\"\n  if(grepl(\"costing\", abstract)) category <- \"managerial\"\n  if(grepl(\"tax\" , abstract2)) category <- \"tax\"\n  if(grepl(\"audit\", \"abstract2\")) category <- \"audit\"\n  \n  return(category)\n}",
+    "created" : 1426009252760.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "21|48|57|0|\n",
+    "hash" : "1434982928",
+    "id" : "37EB0A49",
+    "lastKnownWriteTime" : 1426009292,
+    "path" : "~/Dropbox/Research/Accounting Scientometrics/code/background.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

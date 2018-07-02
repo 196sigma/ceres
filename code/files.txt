@@ -1,0 +1,37 @@
+background-data.R
+combine-forecasts.R
+convert-unemployment.R
+cs-forecast.R
+evaluate-eps-fy1.R
+evaluate-eps-fy2.R
+evaluate-eps-fy3.R
+export.sas
+files.txt
+forecast-eps-fy1.R
+forecast-eps-fy2.R
+forecast-eps-fy3.R
+forecast-epsgrowth.R
+forecast-eps.R
+forecasts-eps.csv
+forecasts-epsgrowth.csv
+forecasts-eps.xlsx
+forecasts_returns.csv
+fy1-data2.csv
+fy1-full.sas
+fy1.sas
+fy2.sas
+fy3.sas
+get returns.sas
+ge.txt
+goog.csv
+importstatement.sas
+prep-data-fy2.R
+prep-data.R
+prep-data-short.R
+proc means.xlsx
+pwrd.csv
+run.sh
+summary stats.R
+trading-strategy.R
+univariate analysis - eps.R
+univariate-eps-rsquared.R

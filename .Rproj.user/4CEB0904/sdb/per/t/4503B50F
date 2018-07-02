@@ -1,0 +1,17 @@
+{
+    "contents" : "# pub-analysis.R\nrm(list=ls())\nlibrary(hash)\nsource('background.R')\n\nload('../data/pub-list.RData')\nload('../data/author-list.RData')\nload('../data/author-list-unique.RData')\nnauthors <- length(author.list.unique)\n\n## Get author pub count\nauthor.pub.count <- data.frame(table(author.list))\nnames(author.pub.count) <- c('author','pub_count')\nauthor.pub.count$author <- as.character(author.pub.count$author)\nsave(author.pub.count, file='../data/author-pub-count.RData')\n\ncoauth.table <- hash(keys=author.list.unique)\nfor(author in coauth.table$keys) coauth.table[author] <- vector(mode='list')\n\nX <- data.frame(author = author.list.unique, npapers = rep(0, nauthors))\n\nfor(author in author.list.unique){\n  for(pub in pub.list){\n    a <- get.authors(pub)\n    if(author %in% a){\n      coauth.table[author] <- c(coauth.table[[author]], a)\n      \n      ## Mean papers per author\n      o <- which(X$author == author)\n      X[o, 'npapers'] <- X[o, 'npapers'] + 1\n    }\n  }\n}\n\n\nX <- X[order(X$npapers, decreasing=TRUE), ]\n\n## remove author from own coauthor list\nfor(author in coauth.table$keys[[1]]) {\n  coauth.table[[author]] <- coauth.table[[author]][coauth.table[[author]] != author]\n}\n## Remove duplicates\nfor(author in coauth.table$keys[[1]]) coauth.table[[author]] <- unique(coauth.table[[author]])\n\n## Create list of pairs of coauthors\n## may have repeat coauth pairs\ncoauth.list = vector(mode='list')\ni <- 0\nfor(author1 in coauth.table$keys[[1]]){\n  for(author2 in coauth.table[[author1]]){\n    coauth.list[[i+1]] <- sort(c(author1, author2))\n    i <- i+1\n  }\n}\n## Remove duplicates\ncoauth.list <- unique(coauth.list)\n\nsave(coauth.list, file='../data/coauth-list.RData')\nsave(coauth.table, file='../data/coauth-table.RData')",
+    "created" : 1425834728852.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "580062691",
+    "id" : "4503B50F",
+    "lastKnownWriteTime" : 1426011156,
+    "path" : "~/Dropbox/Research/Accounting Scientometrics/code/pub-analysis.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

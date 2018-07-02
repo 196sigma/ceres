@@ -1,0 +1,16 @@
+{
+    "contents" : "rm(list=ls())\nlibrary(tm)\nlibrary(tau)\n\nload('../data/pub-data.RData')\nabstracts.text <- pub.data$abstract\nabstracts.text <- abstracts.text[abstracts.text != \"\"]\n####################################################################################################\n\n# Ngram analysis\n\n#bigrams\nabstracts <- Corpus(VectorSource(abstracts.text))\n#abstracts <- tm_map(abstracts, removeNumbers)\nabstracts <- tm_map(abstracts, removePunctuation)\nabstracts <- tm_map(abstracts , stripWhitespace)\nabstracts <- tm_map(abstracts, tolower)\nabstracts <- tm_map(abstracts, removeWords, stopwords(\"english\")) # this stopword file is at C:\\Users\\[username]\\Documents\\R\\win-library\\2.13\\tm\\stopwords \nabstracts <- tm_map(abstracts , stripWhitespace)\n\nabstracts.text2 <- unlist(abstracts$content)\n\nabstracts.bigram <- textcnt(abstracts.text2, n=2, method=\"string\", marker=\" \", decreasing=FALSE)\nabstracts.trigram <- textcnt(abstracts.text2, n=3, method=\"string\", marker=\" \", decreasing=FALSE)\n\nabstracts.bigram.df <- data.frame(counts = unclass(abstracts.bigram), \n                                  size = nchar(names(abstracts.bigram)))\nabstracts.bigram.df <- abstracts.bigram.df[order(abstracts.bigram.df$count, decreasing=TRUE), ]\naccounting.bigrams <- rownames(abstracts.bigram.df)[1:1000]\n\nabstracts.trigram.df <- data.frame(counts = unclass(abstracts.trigram), \n                                   size = nchar(names(abstracts.trigram)))\nabstracts.trigram.df <- abstracts.trigram.df[order(abstracts.trigram.df$count, decreasing=TRUE), ]\n\naccounting.trigrams <- rownames(abstracts.trigram.df)[1:1000]\n\nX <- data.frame(accounting.bigrams, accounting.trigrams)\nwrite.csv(x=X, file='accounting-dictionary.csv', quote=FALSE, row.names=FALSE)\naccounting.dictionary <- X\nsave(X, file='../data/accounting-dictionary.RData')",
+    "created" : 1425938309626.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "82431082",
+    "id" : "AC4304A9",
+    "lastKnownWriteTime" : 1426008518,
+    "path" : "~/Dropbox/Research/Accounting Scientometrics/code/accounting-ngrams.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,0 +1,17 @@
+{
+    "contents" : "library(igraph)\nrm(list=ls())\nsource('background.R')\nload('../data/coauth-list.RData')\nload('../data/author-pub-count.RData')\n\nf <- function(n, aLayout){\n  X <- coauth.list\n  X1 <- data.frame(matrix(NA, nrow=n, ncol=2))\n  names(X1) <- c('author1', 'author2')\n  \n  for(i in 1:n){\n    X1[i,1] <- X[[i]][1]\n    X1[i,2] <- X[[i]][2]\n  }\n  \n  ## Calculate edge weights as joint impact factor\n  X2 <- X1\n  for(author1 in X1$author1){\n    o1 <- which(X2$author1 == author1)\n    o2 <- which(author.pub.count$author==author1)\n    X2[o1, 'author1.count'] <- author.pub.count[o2, 'pub_count']\n  }\n  for(author2 in X1$author2){\n    o1 <- which(X2$author2 == author2)\n    o2 <- which(author.pub.count$author==author2)\n    X2[o1, 'author2.count'] <- author.pub.count[o2, 'pub_count']\n  }\n  X2$impact <- X2$author1.count + X2$author2.count\n  X2 <- X2[order(X2$impact)[1:n], ]\n  \n  ## Plot\n  g <- graph.data.frame(X1, directed=FALSE)\n  g.names <- unique(c(X1$author1, X1$author2))\n  V(g)$names <- g.names\n  g.sizes <- author.pub.count[which(author.pub.count$author %in% g.names), \"pub_count\"]\n  node.size <- setNames(g.sizes, g.names)\n  par(mai=c(0,0,1,0))\n  plot(g, layout=aLayout, vertex.label=g.names, vertex.label.dist=0.1, vertex.frame.color='white',\n       vertex.label.cex = .5, vertex.label.color = \"grey20\", vertex.size=node.size)\n}\nf(200, layout.fruchterman.reingold)\ntitle('Co-authorship network of top researchers in accounting\\n2000-2015')\nf(100, layout.circle)\nf(100, layout.kamada.kawai)\nf(100, layout.star)\n\n\n",
+    "created" : 1425937698724.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "6|26|40|0|\n",
+    "hash" : "3458430470",
+    "id" : "7F1D478A",
+    "lastKnownWriteTime" : 1426014356,
+    "path" : "~/Dropbox/Research/Accounting Scientometrics/code/plot-pub-data.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

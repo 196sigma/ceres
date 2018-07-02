@@ -1,0 +1,17 @@
+{
+    "contents" : "# categorize-pubs.R\nrm(list=ls())\nlibrary(lsa)\nsource('background.R')\npub.data <- read.csv('../data/all-citations.txt', sep='\\t', stringsAsFactors=FALSE)\nn <- nrow(pub.data)\n\nget.category <- function(abstract, silent=TRUE){\n  if(!silent) print(abstract)\n  category <- \"financial\"\n  \n  N.TERMS <- 2\n  n.fin.terms <- 0\n  n.mng.terms <- 0\n  n.audit.terms <- 0\n  n.tax.terms <- 0\n  \n  mng.terms <- c(\"relative performance evaluation\", \"economic value added\", \"activity based\", \"abc\", \"decision making\", \"control\",\"managerial\", \"costing method\", \"performance sensitivit\",\"pay-performance\")\n  tax.terms <- c(\"tax\")\n  audit.terms <- c(\"audit\")\n  \n  #abstract <- X[2, \"abstract\"]\n  abstract.corpus <- Corpus(VectorSource(abstract))\n  abstract.corpus <- tm_map(abstract.corpus, removeNumbers)\n  abstract.corpus <- tm_map(abstract.corpus, removePunctuation)\n  abstract.corpus <- tm_map(abstract.corpus, stripWhitespace)\n  abstract.corpus <- tm_map(abstract.corpus, tolower)\n  abstract.corpus <- tm_map(abstract.corpus, removeWords, stopwords(\"english\")) \n  abstract.corpus <- tm_map(abstract.corpus, stripWhitespace)\n  \n  abstract2 <- unlist(abstract.corpus$content)\n  abstract.tokens <- scan_tokenizer(abstract2)\n  n <- length(abstract.tokens)\n  if(grepl(\"managerial accounting\", abstract)) category <- \"managerial\"\n  if(grepl(\"relative performance\", abstract)) category <- \"managerial\"\n  if(grepl(\"performance sensitivit\", abstract)) category <- \"managerial\"\n  if(grepl(\"economic value add\", abstract)) category <- \"managerial\"\n  if(grepl(\"reporting system\", abstract)) category <- \"managerial\"\n  if(grepl(\"costing\", abstract)) category <- \"managerial\"\n  if(grepl(\"tax\" , abstract2)) category <- \"tax\"\n  if(grepl(\"audit\", \"abstract2\")) category <- \"audit\"\n      \n  return(category)\n}\n\n\nfor(i in 1:n){\n  abstract <- pub.data[i, \"abstract\"]\n  pub.data[i, 'category'] <- get.category(abstract)\n}\n\nsave(pub.data, file='../data/pub_data.RData')\n\nabstracts.text <- pub.data$abstract\nabstracts.text <- abstracts.text[abstracts.text != \"\"]\n####################################################################################################\n\nX <- pub.data[which(pub.data$abstract != \"\"), ]\nabstract <- X[1, \"abstract\"]\n\nget.category(X[1, \"abstract\"], silent=F)\nget.category(X[2, \"abstract\"], silent=F)\nget.category(X[3, \"abstract\"], silent=F)\nget.category(X[4, \"abstract\"], silent=F)\nget.category(X[5, \"abstract\"], silent=F)\nget.category(X[6, \"abstract\"], silent=F)\n\n",
+    "created" : 1425948344594.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "7|48|43|0|\n",
+    "hash" : "1862070579",
+    "id" : "E99E4B9C",
+    "lastKnownWriteTime" : 1426009056,
+    "path" : "~/Dropbox/Research/Accounting Scientometrics/code/categorize-pubs.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

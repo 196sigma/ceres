@@ -1,0 +1,54 @@
+---
+title: "Earnings"
+date: 2018-06-25
+output: html_document
+---
+
+```{r setup, include = FALSE}
+library(ggplot2)
+library(dplyr)
+
+smaller <- diamonds %>% 
+  filter(carat <= 2.5)
+
+load("C:/Users/Reginald/Dropbox/Research/earnings/data/comp_fundq_filters.RData")
+baseline <- comp.fundq.filters[comp.fundq.filters$data.filter == "baseline", "obs.remaining"]
+assets.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "atq_gt_0", "obs.remaining"]
+sales.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "saleq_gt_0", "obs.remaining"]
+price.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "prccq_gt_2", "obs.remaining"]
+n <- price.filter
+```
+
+1. Full Compustat ``Fundamentals Quarterly’’ dataset: 1,718,797
+2. Select observations where indfmt = 'INDL' and datafmt = 'STD'  and popsrc = 'D'  and consol = 'C'  and finalq = 'Y': `r baseline`
+3. atq > 0: `r assets.filter`
+4. saleq > 0: `r sales.filter`
+5. prccq > 2: `r price.filter`
+
+These `r n` observations represent firms over quarters.
+
+My main outcome measure is net income. EPS is affected mechanically by the number of shares, which in turn is the result of splits and repurchases.
+
+## Plots
+### Number of firms by reporting quarter
+### Distribution by reporting year
+### Distribution by industry
+
+## Earnings Announcement Dates
+
+## Feature Selection
+### Missing Values
+I code certain missing values as zero. These are:
+* R&D expense
+* dividends
+I code the following missing values as X_missing:
+*
+*
+In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
+
+
+```{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(carat)) + 
+  geom_freqpoly(binwidth = 0.01)
+```

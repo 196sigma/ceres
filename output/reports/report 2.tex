@@ -1,0 +1,207 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[clockwise]{rotating}
+\usepackage{caption}
+\usepackage{graphicx}
+\let\oldtabular\tabular
+\renewcommand{\tabular}{\footnotesize\oldtabular}
+%\newcommand\Fontvi{\fontsize{8}{7.2}\selectfont}
+
+\lstset{language=R}
+%\setlength{\textwidth}{150mm}
+\linespread{1.6}
+\bibpunct{(}{)}{;}{a}{,}{,}
+
+\begin{document}
+\title{Earnings Forecasts from Firm-Level Regressions: Implications for Research and Practice}
+\author{Reginald Edwards\footnote{Ross School of Business, University of 
+Michigan (\texttt{reggie@umich.edu}).}}
+\date{This Draft: 1 September 2014}
+\maketitle
+
+\begin{abstract} 
+
+%Short motivation. Short research question. Short contribution. Short conclusion.
+Analyst 
+forecasts are used in research  on valuation, cost of capital, and more. In this paper I deconstruct
+this supposed advantage of analysts over statistical forecasts. I develop and evaluate a novel
+statistical forecasting framework for earnings. I reinterpret and reevaluate estimates of firms' 
+implied cost of capital and market-level risk premia that rely on analyst forecasts by using a 
+statistical forecast. I examine if the main strength of the purported superioty of analyst forecasts
+is concentrated in the period prior to the passage of Regulation Fair Disclosure (Reg FD). 
+My work posits a model of earnings that has many of the 
+desirable properties of analyst forecasts, but less bias and is applicable to more firms and years.
+This model is thus more useful to both researchers and practitioners.
+
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{Literature Review}
+
+\subsection{Statistical Earnings Forecasts}
+
+
+\subsection{Analysts' Earnings Forecasts}
+
+
+\subsection{Implications for Implied Cost of Capital Estimates}
+
+\subsection{Implications for the Equity Risk Premium}
+
+
+\section{Research Design}
+\subsection{Earnings Forecasts}
+
+%\subsection{Implied Cost of Capital}
+
+%\subsection{Market Equity Premium}
+
+%\subsection{Trading Strategy}
+
+\section{Data}
+\subsection{Data Overview}
+%A correlation matrix for the variables of interest are given in Table \ref{corr-matrix}.
+% Table 1
+
+
+
+%\input{../tables/corr-matrix2.tex}
+
+
+\subsection{Sample Selection}
+
+\section{Results}
+\subsection{Univariate Results}
+
+In the ``univariate'' equation above, $X_{t-1}$ is the lagged observation of a predictor. Table 
+\ref{univariate-stats-eps} below shows summary statistics for the firm-level univariate 
+regressions. 
+
+Table \ref{univariate-stats-eps-rsquared} shows summary statistics for $R^2$ values of
+these regressions. Predictors with high incremental $R^2$ values may be predictive in subsequent 
+out-of-sample tests and the values may serve to limit the set of predictors. In particular, the 
+lower in-sample explanatory power of $Accruals$ compared with $\Delta AP$ and $\Delta AR$ serve as
+partial motivation for the former to be replaced by the latter two in the multivariate model.
+
+\subsection{Earnings Forecasts}
+To assess how the model performs by target year (the target firm's fiscal year end in which 
+earnings will be announced), 
+I compute mean squared prediction errors (MSPE) for all target years. The 
+results in Table \ref{spe-by-year-table-fy1} show MSPE by target year for the model, mean analyst 
+forecast, and median analyst forecast. All three estimates do extremely poorly during the dotcom
+bubble bursting period. \footnote{MSPE comparisons for two-year-ahead and three-year-ahead 
+forecasts have been omitted.}
+%\input{../tables/spe-by-year-table-fy22.tex}
+%\input{../tables/spe-by-year-table-fy32.tex}
+
+%  \begin{figure}[H]
+%  \begin{center}
+%    \includegraphics[height=4in]{../graphics/eps-by-year-fy1.jpeg}
+%    \caption{Mean squared prediction error for model and consensus forecasts by target forecast year.}
+%    \label{spe-by-year-graph-fy1}
+%  \end{center}
+%  \end{figure}
+  
+\textbf{Does private information help analyst forecasts?} Table \ref{evaluation-regfd} presents
+comparisons of the model's accuracy before and after implementation of Regulation Fair Disclosure. 
+As noted in prior literature (e.g. \cite{gintschelmarkov2004}) analyst forecasts are worse in the 
+post-Reg FD period. The performance of the model forecasts does not change in any consistent way
+pre- and post-Reg FD.\footnote{In this section and all others, ``consensus'' forecasts refer to the
+mean analyst estimate. Results with median analyst estimates are qualitatively similar.}
+
+
+\textbf{The effects of \emph{ex ante} uncertainty on forecasts.} Table \ref{evaluation-dispersion}
+presents comparisons of the accuracy of model and consensus forecasts during information 
+environments characterized by high and low uncertainty. Both the model and analyst forecasts 
+perform better during periods characterized by low analyst dispersion.\footnote{Dispersion is 
+measured as the standard deviation of analyst forecasts. High (low) dispersion periods are those
+with a standard deviation above (below) the median. Results are not sensitive to choice of 
+percentile.} For the one-year-ahead forecasts, the model performs relatively better than consensus
+forecasts.
+
+%\subsection{Implied Cost of Capital}
+
+%\subsection{Market Equity Premium}
+
+\subsection{Earnings Forecasts as Trading Signals}
+Most studies that compare time series forecasts to analyst forecasts use a loss function (evaluation
+criterion) that is some form of relative prediction error or bias. To better quantify the 
+significance of divergence between the consensus forecasts of earnings and the model forecast, I 
+examine the returns
+to an investor who uses the divergence in analyst and model forecasts as a signal. As a first step,
+I calculate buy and hold returns ($BAHR$) for each firm from the forecast date to one month and, 
+separately,
+two months after the target date (i.e., the date at which forecasted earnings are revealed.) I do 
+this for all forecasts (one-, two-, and three-year-ahead forecasts.) I then compute the divergence
+between the model forecasts and the consensus forecast, $DIFF$, as the model forecast less the 
+consensus forecast. $DIFF$ is calculated for each forecast horizon. For each forecast target and 
+returns horizon I run a regression of the form
+
+\begin{equation}
+BAHR_{t+\tau} = \alpha_{0} + \alpha_{1}DIFF_{i} + \varepsilon.
+\end{equation}
+
+Table \ref{evaluation-bahr} shows the coefficient and p-values from each of these regressions. 
+For the forecasts of FY1 earnings, buy-and-hold returns are positively and statistically 
+significantly related to the degree of 
+divergence between model forecasts and consensus analyst forecasts. Note, however, that
+returns have not been adjusted for standard asset pricign risk factors.
+\\
+
+Next, I rank and group each forecast into deciles by the level of divergence. As Figures
+\ref{bahr-diff-decile} and \ref{bahr-diff-decile2} show, the buy-and-hold returns over the forecast
+horizon for the forecast of FY1 earnings is increasing in the level of divergence between the model
+and the consensus forecast. This indicates that the stock returns of firms for which the model
+forecasts higher earnings than analysts are higher than those for which analysts are more optimistic
+than the model suggests.
+\\
+
+  
+\section{Conclusions and Extensions}
+
+
+\bibliographystyle{aea}
+\bibliography{articles}
+\newpage
+\section*{Appendix: Tables and Figures}
+\input{../tables/summary-stats2.tex}\newpage
+\input{../tables/univariate-stats-eps2.tex}\newpage
+\input{../tables/univariate-stats-eps-rsquared2.tex}\newpage
+\input{../tables/spe-by-year-table-fy12.tex}\newpage
+\input{../tables/evaluation-regfd}\newpage
+\input{../tables/evaluation-dispersion}\newpage
+\input{../tables/evaluation-bahr.tex}\newpage
+
+  \begin{figure}[H]
+  \begin{center}
+    \includegraphics[height=4in]{../graphics/bahr-diff-decile.jpeg}
+    \captionsetup{width=4in, font=footnotesize}
+    \caption{Buy-and-hold returns by $DIFF$ decile for one-year-ahead model. $DIFF$ is the model 
+    forecast of earnings less the consensus forecast.}
+    \label{bahr-diff-decile}
+  \end{center}
+  \end{figure}
+
+  \begin{figure}[H]
+  \begin{center}
+    \includegraphics[height=4in]{../graphics/bahr-diff-decile2.jpeg}
+    \captionsetup{width=4in, font=footnotesize}
+    \caption{Buy-and-hold returns by $DIFF$ decile for one-year-ahead model. $DIFF$ is the model 
+    forecast of earnings less the consensus forecast. Group 1: first and second decile. Group 3: 
+    ninth and 10th deciles.}
+    \label{bahr-diff-decile2}
+  \end{center}
+  \end{figure}
+\end{document}

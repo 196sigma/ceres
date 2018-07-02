@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1529185627657.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6D1014A9",
+    "lastKnownWriteTime" : 32651513914720368,
+    "last_content_update" : 1529185627657,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "EC348F87",
+        "caption" : "small.losses.by.qtr",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=small.losses.by.qtr&cache_key=EC348F87",
+        "displayedObservations" : 226,
+        "environment" : "",
+        "object" : "small.losses.by.qtr",
+        "preview" : 0,
+        "totalObservations" : 226,
+        "variables" : 2
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

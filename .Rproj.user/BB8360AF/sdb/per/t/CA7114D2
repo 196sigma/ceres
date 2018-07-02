@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "## Reginald Edwards\n## 16 June 2018\n## \n## Forecasting earnings treating each firm as a time-series, using only lagged\n## fundamentals for that firm,\n\n\nrm(list=ls())\ngc()\n\nload(\"data/comp_fundq.RData\")\nX <- comp.fundq\n\n###############################################################################\n## Linear Models\n###############################################################################\n\n## Linear Regression\n\nlinreg1 <- lm(epspxq.lead1 ~ epspxq, data = comp.fundq)\nsummary(linreg1)\n",
+    "created" : 1529187798261.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "918929504",
+    "id" : "CA7114D2",
+    "lastKnownWriteTime" : 1529195508,
+    "last_content_update" : 1529195508341,
+    "path" : "C:/Users/Reginald/Dropbox/Research/earnings/code/quarterly-earnings-forecasts.R",
+    "project_path" : "code/quarterly-earnings-forecasts.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,16 @@
+{
+    "contents" : "TODO\n. Pull JFE citations\n. Pull JF citations\n. Pull RFS citations\n. rewrite R code in python\n. get university affiliations\n. get publications' impact factor/citations count\n\nTODO: Publication classification\n===================================================================================================\n. N-gram analysis on abstracts\n. N-gram analysis on titles\n. classify abstracts\n\n\nTODO: Co-author networks\n===================================================================================================\n. Calculate mean number of coauthors by year/over time\n. Calculate clustering coefficient by year/over time\n. Calculate number of unique authors by year\n. Calculate mean papers per author over time\n. Calculate most connected scientist\n. Weight plot nodes by number of publications\n\nTODO: Hypothesis Generation\n===================================================================================================\n. trends?\n. holes?",
+    "created" : 1426011305556.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3485449284",
+    "id" : "7C47DBDF",
+    "lastKnownWriteTime" : 1426011941,
+    "path" : "~/Dropbox/Research/Accounting Scientometrics/Notes",
+    "project_path" : null,
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "text"
+}

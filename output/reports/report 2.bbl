@@ -1,0 +1,13 @@
+
+
+% Bibstyle aea.bst version 2009.05.20
+
+\begin{thebibliography}{xx}
+
+\harvarditem[Gintschel \harvardand\ Markov]{Andreas Gintschel \harvardand\
+  Stanimir Markov}{2004}{gintschelmarkov2004}
+{\bf Gintschel, Andreas, and Stanimir Markov.} 2004. ``The effectiveness of
+  Regulation FD.'' {\em Journal of Accounting and Economics}, 37(3):~293 --
+  314.
+
+\end{thebibliography}

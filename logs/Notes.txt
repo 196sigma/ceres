@@ -1,0 +1,99 @@
+PRESENTATION QUESTIONS
+1. Are returns concentrated around subsequent earnings announcements?
+2. 
+
+TODO
+1. Check code and data pull (esp macro variables: are they matched right?, fiscal year end fyear matching)
+2. Distance this work from Ball (2014)
+3. compute accruals using cf method
+4. Use indicator variables relative to industry
+5. Add R&D, high-low accruals, share buybacks and dividends, equity issuance (F-score variables)
+6. Add industry average earnings lags as predictors (cf Cyert (1967) and Williams (1967))
+7. Limit to firms with sufficient quarters to estimate regression(sacrifice some external validity)
+8. have reg model choose in-sample based on AIC/AdjR-squared via stepwise
+. check delisting reasons (potentially excluded acquired firms)
+. make use of Z-score
+. trading strategy
+. prepare table of average multivariable regression coefficients by industry
+. check bias of analyst forecasts, other properties
+. evaluate by number of years available for estimation, dec year-end
+. add AR(1) to all evaluation reports
+. check performance by ex-ante uncertainty (historical earnings volatility)
+. incorporate mgmt guidance
+. Re-do on a quarterly basis
+. Consider Sales, R&D, other outcomes to model
+
+DONE
+. get macro variables for fy2 and fy3 forecasts
+. Check post-Reg FD split
+. Check subsample in which there is high analyst dispersion (disagreement)
+. compare forecast accuracy over time (by fyear)
+. multivariate model building
+. merge analyst fy2 and fy3 forecasts with stat forecasts
+. compare summary stats to literature
+. log total assets
+. univariate tests
+. Correlation matrix
+. Compute summary stats 
+. Deal with outliers, missingness (winsorize at 1/99)
+. Add more actual lags
+. Try limiting to long-lived firms (15+ years)
+
+NOT GONNA DO
+. Try MA(1) term
+* Extend data past IBES coverage period
+
+NOTES
+* Take a sample of blue chip firms (GE, IBM, MCD), get their quarterly earnings and associated
+analyst forecasts. Do the forecasting procedure in Lorek and Pagach (2014) to get predictions of 
+one-year-ahead earnings. Augment with macro, accounting, and stock price data. Evaluate against 
+analyst forecasts 11 months out (ie, forecasts of next year's EPS right after this year's is 
+announced.) Evaluate trading strategy based on 1-, 3-, and 5-year buy-and-hold returns.
+
+* Consider EPS growth instead of EPS level. More likely to follow an AR(1).
+
+* Take a sample of blue chip firms (GE, IBM, MCD), get their annual earnings and associated analyst 
+forecasts. Augment forecast with macro, accounting, and stock price data. Evaluate against analyst 
+forecasts 11 months out (ie, forecasts of next year's EPS right after this year's is announced.) 
+Evaluate trading strategy based on 1-, 3-, and 5-year buy-and-hold returns.
+	* Macro: gdp, pct chg in gdp, unemployment, headline and core inflation (cpi, ppi)
+	* sp500, own stock price, yoy change in stock price, PE ratio
+	* accounting
+		* raw: assets, accruals,   earnings, dividends
+		* ratios: ROE, ROA, RNOA
+	* other: industry factors?
+	* Add MA(1) term
+	
+* Uses of earnings forecast: 
+	* evaluate based on MSE, MAE, bias
+	* trading strategy
+	* icc
+	* estimating equity risk premium
+
+* Separately handle firms that are likely to go bankrupt next year (Altman's Z-score?)
+
+Differences from Hou et al
+* augmented model with macro data
+* augmented model with fundamental ratios (eg ROE)
+* firm-level regressions
+* use IBES eps for forecasting
+
+* Include a case-study in modeling and forecasting earnings and trading on the forecast (eg GOOG)
+	* start with graph, then AR(1) and analyst forecasts, add growth, macro, acct data
+	
+DATA TREATMNET
+* Drop firms with gaps in earnings data (TODO: handle this better!)
+* Exclude small cap firms (MV<1bn)
+* Limited to firms with at least 15 years of earnings history in the sample period (~20%). (Market 
+this as a feature, not a bug.)
+* Exclude firms whose firms are negative over the entire observation period
+* Utilities and financials are excluded\
+* Compute current assets as CASH + RECEIVABLES + INVENTORIES
+* GDP: Use nominal, quarterly, seasonally adjusted, year-over-year change in GDP. For forecasting,
+use the gdp figure from the quarter prior to that in which the analyst forecast (as indicated by 
+statpers). STATPERS_GDP_QTR = 4, indicates use the gdp figure from the fourth quarter of the 
+PREVIOUS year, STATPERS_GDP_QTR = 1 indicates use the gdp figure from the 1st quarter of that year,
+and so on.
+* Unemployment: Use the unemployment rate from the month prior to the month in which the analyst 
+made the forecast
+* Accruals calculated using the balance sheet approach (eg Sloan [1996])

@@ -19,6 +19,7 @@ price.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "prccq_gt_2
 n <- price.filter
 ```
 
+## Data Sources and Preparation
 1. Full Compustat ``Fundamentals Quarterly’’ dataset: 1,718,797
 2. Select observations where indfmt = 'INDL' and datafmt = 'STD'  and popsrc = 'D'  and consol = 'C'  and finalq = 'Y': `r baseline`
 3. atq > 0: `r assets.filter`
@@ -29,15 +30,18 @@ These `r n` observations represent firms over quarters.
 
 My main outcome measure is net income. EPS is affected mechanically by the number of shares, which in turn is the result of splits and repurchases.
 
-## Plots
+<!-- Plots -->
 ### Number of firms by reporting quarter
 ### Distribution by reporting year
 ### Distribution by industry
 
-## Earnings Announcement Dates
+### Earnings Announcement Dates
 
 ## Feature Selection
-### Missing Values
+
+### Raw Variables
+
+### Treatment of Missing Values
 I code certain missing values as zero. These are:
 * R&D expense
 * dividends
@@ -46,6 +50,7 @@ I code the following missing values as X_missing:
 *
 In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
 
+### Variable Correlation
 
 ```{r, echo = FALSE}
 smaller %>% 

@@ -7,7 +7,7 @@
 rm(list=ls())
 gc()
 
-load("data/comp_fundq.RData")
+load("../0_datasets/comp_fundq.RData")
 X <- comp.fundq
 
 summary(X$epspxq)

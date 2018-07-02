@@ -3,14 +3,13 @@ PRESENTATION QUESTIONS
 2. 
 
 TODO
-1. Check code and data pull (esp macro variables: are they matched right?, fiscal year end fyear matching)
-2. Distance this work from Ball (2014)
-3. compute accruals using cf method
-4. Use indicator variables relative to industry
-5. Add R&D, high-low accruals, share buybacks and dividends, equity issuance (F-score variables)
-6. Add industry average earnings lags as predictors (cf Cyert (1967) and Williams (1967))
-7. Limit to firms with sufficient quarters to estimate regression(sacrifice some external validity)
-8. have reg model choose in-sample based on AIC/AdjR-squared via stepwise
+. Check code and data pull (esp macro variables: are they matched right?, fiscal year end fyear matching)
+. compute accruals using cf method
+. Use indicator variables relative to industry
+. Add R&D, high-low accruals, share buybacks and dividends, equity issuance (F-score variables)
+. Add industry average earnings lags as predictors (cf Cyert (1967) and Williams (1967))
+. Limit to firms with sufficient quarters to estimate regression(sacrifice some external validity)
+. have reg model choose in-sample based on AIC/AdjR-squared via stepwise
 . check delisting reasons (potentially excluded acquired firms)
 . make use of Z-score
 . trading strategy
@@ -20,10 +19,6 @@ TODO
 . add AR(1) to all evaluation reports
 . check performance by ex-ante uncertainty (historical earnings volatility)
 . incorporate mgmt guidance
-. Re-do on a quarterly basis
-. Consider Sales, R&D, other outcomes to model
-
-DONE
 . get macro variables for fy2 and fy3 forecasts
 . Check post-Reg FD split
 . Check subsample in which there is high analyst dispersion (disagreement)

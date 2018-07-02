@@ -37,6 +37,8 @@ My main outcome measure is net income. EPS is affected mechanically by the numbe
 
 ### Earnings Announcement Dates
 
+### Earnings Decomposition: Cash Flows and Accruals
+
 ## Feature Selection
 
 ### Raw Variables
@@ -51,6 +53,9 @@ I code the following missing values as X_missing:
 In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
 
 ### Variable Correlation
+
+### Anomaly and Outlier Detection
+I examine the pairwise distribution of each 2-tuple of variables to look for anomalies. For example I examine the distribution of ROA and ROE and look for data points far outside the joint distribution.
 
 ```{r, echo = FALSE}
 smaller %>% 

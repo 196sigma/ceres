@@ -28,6 +28,8 @@ n <- price.filter
 
 These `r n` observations represent firms over quarters.
 
+Industry definitions (SIC codes) from the annual compustat file.
+
 My main outcome measure is net income. EPS is affected mechanically by the number of shares, which in turn is the result of splits and repurchases.
 
 <!-- Plots -->
@@ -36,6 +38,7 @@ My main outcome measure is net income. EPS is affected mechanically by the numbe
 ### Distribution by industry
 
 ### Earnings Announcement Dates
+<!-- Heatmap -->
 
 ### Earnings Decomposition: Cash Flows and Accruals
 

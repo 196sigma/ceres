@@ -1,15 +1,17 @@
 -- Reginald Edwards
 -- 12 June 2018
---
+-- 4 July 2018
 -- PostgresQL
 -- run in postgresql via "\include code/get-fundamentals.sql"
 
 
--- drop view v1;
+
 -- drop table firm_quarters;
 -- drop table long_firm_quarters;
 -- drop table long_firms;
--- drop table fundq_short;
+
+drop view v1;
+drop table fundq_short;
 
 create view v1 as select * 
 from import.comp_fundq 
@@ -26,7 +28,7 @@ where indfmt = 'INDL'
 
 -- get relevant ratio variables
 create table fundq_short as
-select gvkey, fyr, fyearq, datacqtr, datadate, tic, conm,
+select gvkey, fyr, fyearq, datacqtr, datafqtr, datadate, tic, conm,
 apq,
 ajexq,
 atq,

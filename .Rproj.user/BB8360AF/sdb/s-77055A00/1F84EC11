@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "## Reginald Edwards\n## 03 July 2018\n##\n## An interative dashboard to view properties of the distribution of earnings\n## TODO:\n##  - use ROE and ROA instead of raw net income\n##  - beautify graphs\n\nrm(list=ls())\ngc()\nlibrary(shiny)\n\nload(\"../0_datasets/comp_fundq.RData\")\nsource(\"../0_code/useful-fn.R\")\n\nX <- comp.fundq[, c(\"gvkey\", \"fyearq\", \"datacqtr\", \"qtr\", \"datafqtr\", \"niq\", \"sich\")]\nX$sic2 <- trunc(X$sich/100)\nX <- wins_df(X = X, var = \"niq\", firmid = \"gvkey\", yearid = \"qtr\")\nindustries <- unique(X$sic2)\nindustries <- industries[!is.na(industries)]\n\n# Use a fluid Bootstrap layout\nui <- fluidPage(\n  \n  titlePanel(\"Net Income Distribution\"),\n  \n  sidebarLayout(\n    \n    # Define the sidebar with inputs\n    sidebarPanel(\n      sliderInput(inputId = \"year\", label = \"Choose year\", value = 1990, min = 1962, max = 2018, step = 1),\n      \n      checkboxInput(inputId = \"density\", label = strong(\"Show density estimate\"), value = FALSE),\n      \n      # Display this only if the density is shown\n      conditionalPanel(condition = \"input.density == true\", \n        sliderInput(inputId = \"bw_adjust\", \n        label = \"Bandwidth adjustment:\", \n        min = 0.2, max = 2, value = 1, step = 0.2)),\n        \n      checkboxGroupInput(inputId = \"industry\", label = \"Choose industry\", selected = 36, choices = industries),\n    \n      hr(),\n      helpText(\"Data from Compustat\")),\n  \n    #mainPanel(plotOutput(outputId = \"hist\"))\n    \n    #mainPanel(\"main panel\", \n     #         fluidRow(\n      #          splitLayout(\n       #           cellWidths = c(\"50%\", \"50%\"), \n        #          plotOutput(\"hist\"), \n         #         plotOutput(\"tsplot\"))))\n    \n    mainPanel(\"main panel\", plotOutput(\"hist\"),  plotOutput(\"tsplot\"))\n  )\n)\n\nserver <-  function(input, output){\n  output$hist <- renderPlot({\n    o <- which(X$fyearq == input$year & X$sic2 %in% input$industry)\n    title = paste(length(o), \" Firms\")\n    hist(X[o, \"niq\"], main = title, xlab = \"Net Income\", probability = TRUE, breaks = 40)\n    \n    if (input$density) {\n      dens <- density(X[o, \"niq\"], adjust = input$bw_adjust)\n      lines(dens, col = \"blue\")\n    }\n  })\n  \n  output$tsplot <- renderPlot({\n    o2 <- which(X$sic2 %in% input$industry)\n    niq.agg <- aggregate(X[o2, \"niq\"], by = list(X[o2, \"datacqtr\"]), FUN = sum, na.rm = TRUE)\n    names(niq.agg) <- c(\"datacqtr\", \"niq.sum\")\n    niq.agg <- niq.agg[complete.cases(niq.agg), ]\n    \n    plot(niq.agg$niq.sum, type = 'l', main = \"Total Net Income\")\n  })\n  \n}\n\nshinyApp(ui = ui, server =  server)\n\n",
+    "created" : 1530718699623.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "356605125",
+    "id" : "1F84EC11",
+    "lastKnownWriteTime" : 1530851279,
+    "last_content_update" : 1530851279411,
+    "path" : "C:/Users/Reginald/Dropbox/Research/ceres/code/earnings-shiny-dashboard.R",
+    "project_path" : "code/earnings-shiny-dashboard.R",
+    "properties" : {
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

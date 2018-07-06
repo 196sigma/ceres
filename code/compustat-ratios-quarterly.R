@@ -113,6 +113,16 @@ get.quarter <- function(x){
 }
 comp.fundq$qtr <- get.quarter(comp.fundq$datacqtr)
 
+
+###############################################################################
+## Add industry codes
+###############################################################################
+## TODO: move this code to SQL
+load("../0_datasets/comp_funda.RData")
+industries <- comp.funda[,c("gvkey", "fyear", "sich")]
+rm(comp.funda)
+comp.fundq <- merge(comp.fundq, industries, by.x = c("gvkey", "fyearq"), by.y = c("gvkey", "fyear"), all.x = TRUE)
+
 ###############################################################################
 ## Apply some data filters
 ###############################################################################
@@ -172,5 +182,5 @@ comp.fundq <- lead.df(comp.fundq, "epspxq", "gvkey", "qtr")
 ## Save data to project data folder
 ###############################################################################
 comp.fundq <- comp.fundq[order(comp.fundq$gvkey, comp.fundq$datacqtr, decreasing = FALSE), ]
-save(comp.fundq, file = 'data/comp_fundq.RData')
+save(comp.fundq, file = '../0_datasets/comp_fundq.RData')
 save(comp.fundq.filters, file = "data/comp_fundq_filters.RData")

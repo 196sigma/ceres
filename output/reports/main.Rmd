@@ -8,10 +8,7 @@ output: html_document
 library(ggplot2)
 library(dplyr)
 
-smaller <- diamonds %>% 
-  filter(carat <= 2.5)
-
-load("C:/Users/Reginald/Dropbox/Research/earnings/data/comp_fundq_filters.RData")
+load("C:/Users/Reginald/Dropbox/Research/ceres/data/comp_fundq_filters.RData")
 baseline <- comp.fundq.filters[comp.fundq.filters$data.filter == "baseline", "obs.remaining"]
 assets.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "atq_gt_0", "obs.remaining"]
 sales.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "saleq_gt_0", "obs.remaining"]
@@ -49,19 +46,48 @@ My main outcome measure is net income. EPS is affected mechanically by the numbe
 ### Treatment of Missing Values
 I code certain missing values as zero. These are:
 * R&D expense
-* dividends
-I code the following missing values as X_missing:
-*
-*
-In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
 
-### Variable Correlation
+* dividends
+
+I code the following missing values as X_missing:
+* 
+
+*
+
+In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
 
 ### Anomaly and Outlier Detection
 I examine the pairwise distribution of each 2-tuple of variables to look for anomalies. For example I examine the distribution of ROA and ROE and look for data points far outside the joint distribution.
 
+### Summary Statistics
+### Variable Correlation
+
+## Candidate Models
+I analyze earnings and earnings declines as outcome variables in regression and classification models, respectively.
+
+### Regularized Linear Regression Model with the LASSO
+### Decision Tree
+### SVM
+### Random Forests
+### Neural Network Model
+
+### Regularized Logistic Regression Model with the LASSO
+### Decision Tree
+### Random Forests
+### Neural Network Model
+
+## Results
+I evaluate the models based on
+
+* Mean Percent Error
+
+* RMSE
+
+* MAE
+
+* Dollar returns 
+
+## Conclusions
 ```{r, echo = FALSE}
-smaller %>% 
-  ggplot(aes(carat)) + 
-  geom_freqpoly(binwidth = 0.01)
+#smaller %>% ggplot(aes(carat)) + geom_freqpoly(binwidth = 0.01)
 ```

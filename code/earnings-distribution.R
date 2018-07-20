@@ -1,6 +1,6 @@
 ## Reginald Edwards
 ## 16 June 2018
-## 25 June 2018
+## 20 July 2018
 ## Analyze distribution of earnings beats/small profits and losses
 ###############################################################################
 
@@ -8,8 +8,33 @@ rm(list=ls())
 gc()
 
 load("../0_datasets/comp_fundq.RData")
+source("../0_code/useful-fn.R")
 X <- comp.fundq
 
+## Create one-quarter ahead lead of net income
+X <- lead.df(X, "niq", "gvkey", "qtr")
+
+###############################################################################
+## Earnings Declines
+###############################################################################
+
+X$decline <- 1*(X$niq.lead1 < X$niq)
+summary(X$decline)
+mean.declines <- aggregate(X$decline, by = list(X$datacqtr), FUN = mean, na.rm = TRUE)
+names(mean.declines) <- c("datacqtr", "mean.decline")
+plot(mean.declines$mean.decline, type = 'l')
+
+X$negearn <- 1*(X$niq.lead1 < 0)
+summary(X$negearn)
+X1 <- aggregate(X$negearn, by = list(X$datacqtr), FUN = mean, na.rm = TRUE)
+names(X1) <- c("datacqtr", "mean.negearn")
+plot(X1$mean.negearn, type = 'l')
+
+
+
+###############################################################################
+## 
+###############################################################################
 summary(X$epspxq)
 hist(X$epspxq)
 percentiles <- quantile(X$epspxq, probs = seq(0,1,.01))

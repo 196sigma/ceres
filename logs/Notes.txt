@@ -1,8 +1,6 @@
-PRESENTATION QUESTIONS
-1. Are returns concentrated around subsequent earnings announcements?
-2. 
-
 TODO
+. Lookinto using SMOTE to balance classes for earnings declines/misses
+
 . Check code and data pull (esp macro variables: are they matched right?, fiscal year end fyear matching)
 . compute accruals using cf method
 . Use indicator variables relative to industry

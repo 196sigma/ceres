@@ -1,6 +1,6 @@
 ---
-title: "Earnings"
-date: 2018-06-25
+title: "Using Shallow and Deep Learning to Predict Corporate Earnings"
+date: 2018-07-20
 output: html_document
 ---
 
@@ -16,7 +16,10 @@ price.filter <- comp.fundq.filters[comp.fundq.filters$data.filter == "prccq_gt_2
 n <- price.filter
 ```
 
-## Data Sources and Preparation
+### Introduction
+### Why Earnings?
+### Machine Learning Workflow
+### Data Sources and Preparation
 1. Full Compustat ``Fundamentals Quarterly’’ dataset: 1,718,797
 2. Select observations where indfmt = 'INDL' and datafmt = 'STD'  and popsrc = 'D'  and consol = 'C'  and finalq = 'Y': `r baseline`
 3. atq > 0: `r assets.filter`
@@ -30,20 +33,20 @@ Industry definitions (SIC codes) from the annual compustat file.
 My main outcome measure is net income. EPS is affected mechanically by the number of shares, which in turn is the result of splits and repurchases.
 
 <!-- Plots -->
-### Number of firms by reporting quarter
-### Distribution by reporting year
-### Distribution by industry
+First, let's establish some facts on the ground.
 
-### Earnings Announcement Dates
+#### Number of firms by reporting quarter
+#### Distribution by reporting year
+#### Distribution by industry
+
+#### Earnings Announcement Dates
 <!-- Heatmap -->
 
-### Earnings Decomposition: Cash Flows and Accruals
+### Feature Selection
 
-## Feature Selection
+#### Raw Variables
 
-### Raw Variables
-
-### Treatment of Missing Values
+#### Treatment of Missing Values
 I code certain missing values as zero. These are:
 * R&D expense
 
@@ -56,27 +59,36 @@ I code the following missing values as X_missing:
 
 In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
 
-### Anomaly and Outlier Detection
+#### Anomaly and Outlier Detection
 I examine the pairwise distribution of each 2-tuple of variables to look for anomalies. For example I examine the distribution of ROA and ROE and look for data points far outside the joint distribution.
 
-### Summary Statistics
-### Variable Correlation
+#### Summary Statistics
+#### Variable Correlation
 
-## Candidate Models
+### Model Selection
 I analyze earnings and earnings declines as outcome variables in regression and classification models, respectively.
 
-### Regularized Linear Regression Model with the LASSO
-### Decision Tree
-### SVM
-### Random Forests
-### Neural Network Model
+#### Regression Models of Future Earnings
+* Regularized Linear Regression Model with the LASSO
 
-### Regularized Logistic Regression Model with the LASSO
-### Decision Tree
-### Random Forests
-### Neural Network Model
+* Decision Tree
 
-## Results
+* SVM
+
+* Random Forests
+
+* Neural Network Model
+
+#### Classification of Earnings Declines 
+* Regularized Logistic Regression Model with the LASSO
+
+* Decision Tree
+
+* Random Forests
+
+* Neural Network Model
+
+### Evaluation
 I evaluate the models based on
 
 * Mean Percent Error
@@ -87,7 +99,7 @@ I evaluate the models based on
 
 * Dollar returns 
 
-## Conclusions
+### Extensions
 ```{r, echo = FALSE}
 #smaller %>% ggplot(aes(carat)) + geom_freqpoly(binwidth = 0.01)
 ```

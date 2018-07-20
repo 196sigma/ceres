@@ -1,4 +1,8 @@
 TODO
+. compute quarterly ratios
+. first run of regression models
+. split sample
+. second run of modeling and out-of-sample validation (don't look at results, just make sure code works)
 . Lookinto using SMOTE to balance classes for earnings declines/misses
 
 . Check code and data pull (esp macro variables: are they matched right?, fiscal year end fyear matching)

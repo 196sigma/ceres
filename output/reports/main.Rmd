@@ -53,9 +53,10 @@ I code certain missing values as zero. These are:
 * dividends
 
 I code the following missing values as X_missing:
-* 
 
-*
+For the following variables, I impute missing values:
+
+* shares outstanding: cshoq
 
 In a simple model of value relevance--one-month buy-and-hold returns after the earnings announcement--the information gained by coding missing values deliberately instead of dropping them is...
 

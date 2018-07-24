@@ -183,4 +183,5 @@ comp.fundq <- lead.df(comp.fundq, "epspxq", "gvkey", "qtr")
 ###############################################################################
 comp.fundq <- comp.fundq[order(comp.fundq$gvkey, comp.fundq$datacqtr, decreasing = FALSE), ]
 save(comp.fundq, file = '../0_datasets/comp_fundq.RData')
+write.csv(x = comp.fundq, file = "../0_datasets/comp_fundq.csv")
 save(comp.fundq.filters, file = "data/comp_fundq_filters.RData")

@@ -1,4 +1,5 @@
 TODO
+. impute cshoq
 . compute quarterly ratios
 . first run of regression models
 . split sample

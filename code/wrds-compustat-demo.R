@@ -1,13 +1,9 @@
-## Reginald Edwards
-## 06 March 2018
-##
-## Load Compustat data and create key firm ratios
+## AUTHOR: Reginald Edwards
+## CREATED: 31 July 2018
+## DESCRIPTION: Query Compustat data from WRDS
 
-rm(list=ls())
-gc()
 library(dplyr)
 library(RPostgres)
-source('../0_code/useful-fn.R')
 source('../0_datasets/wrds_login.R')
 wrds <- dbConnect(Postgres(), 
                   host='wrds-pgdata.wharton.upenn.edu',
@@ -28,15 +24,22 @@ dbClearResult(res)
 save(comp.funda, file = '0_datasets/comp_funda.RData')
 
 ###############################################################################
-load('../0_datasets/comp_funda.RData')
+## Compute Annual Financial Ratios
+###############################################################################
 
 keep.vars <- c("gvkey", "datadate", "fyear", "fyr", "tic", "prcc_f", "seq", 
-               "ceq", "txditc", "txdb", "itcb", "pstkrv", "pstkl", "pstk", "prcc_f", "csho", 
-               "epsfx", "epsfi", "oprepsx", "opeps", "ajex", "ebit", "spi", "nopi", "sale", 
-               "ibadj", "dvc", "dvp", "ib", "oibdp", "dp", "oiadp", "gp", "revt", "cogs", 
-               "pi", "ibc", "dpc", "at", "ni", "ibcom", "icapt", "mib", "ebitda", "xsga",
-               "xido", "xint", "mii", "ppent", "act", "lct", "dltt", "dlc", "che", "invt", 
-               "lt", "rect", "xopr", "oancf", "txp", "txt", "ap", "xrd", "xad", "xlr", "capx")
+               "ceq", "txditc", "txdb", "itcb", "pstkrv", "pstkl", "pstk", 
+               "prcc_f", "csho", 
+               "epsfx", "epsfi", "oprepsx", "opeps", "ajex", "ebit", "spi", 
+               "nopi", "sale", 
+               "ibadj", "dvc", "dvp", "ib", "oibdp", "dp", "oiadp", "gp", 
+               "revt", "cogs", 
+               "pi", "ibc", "dpc", "at", "ni", "ibcom", "icapt", "mib", 
+               "ebitda", "xsga",
+               "xido", "xint", "mii", "ppent", "act", "lct", "dltt", "dlc", 
+               "che", "invt", 
+               "lt", "rect", "xopr", "oancf", "txp", "txt", "ap", "xrd", 
+               "xad", "xlr", "capx")
 
 comp.funda <- comp.funda[keep.vars]
 comp.funda <- comp.funda[order(comp.funda$gvkey, comp.funda$fyear), ]
@@ -376,128 +379,3 @@ comp.funda$capei <- ((comp.funda$ib + lag(comp.funda$ib, 2) + lag(comp.funda$ib,
 o <- order(comp.funda$gvkey, comp.funda$datadate, comp.funda$fyr)
 comp.funda <- comp.funda[o, ]
 rm(o)
-
-model.vars <- c("ni", "at", "ocf",
-                "roa",
-                "pe_op_basic",
-                "pe_op_dil",
-                "pe_exi",
-                "pe_inc",
-                "ps",
-                "pcf",
-                "evm",
-                "bm",
-                "dpr",
-                "npm",
-                "opmbd",
-                "opmad",
-                "gpm",
-                "ptpm",
-                "cfm",
-                "roe",
-                "roce",
-                "capei",
-                "aftret_eq",
-                "aftret_invcapx",
-                "aftret_equity",
-                "pretret_noa",
-                "pretret_earnat",
-                "equity_invcap",
-                "debt_invcap",
-                "totdebt_invcap",
-                "int_debt",
-                "int_totdebt",
-                "cash_lt",
-                "invt_act",
-                "rect_act",
-                "debt_at",
-                "short_debt",
-                "curr_debt",
-                "lt_debt",
-                "fcf_ocf",
-                "adv_sale",
-                "profit_lct",
-                "debt_ebitda",
-                "ocf_lct",
-                "lt_ppent",
-                "dltt_be",
-                "liabs_assets",
-                "debt_capital",
-                "de_ratio",
-                "intcov",
-                "cash_ratio",
-                "quick_ratio",
-                "curr_ratio",
-                "capital_ratio",
-                "cash_debt",
-                "inv_turn",
-                "at_turn",
-                "rect_turn",
-                "pay_turn",
-                "sale_invcap",
-                "sale_equity",
-                "sale_nwc",
-                "rd_sale",
-                "accruals",
-                "gprof",
-                "cash_conversion",
-                "efftax",
-                "intcov_ratio",
-                "staff_sale")
-
-## Winsorize modeling variables
-# remove observations with infinite values
-X <- comp.funda
-for(v in model.vars){
-  o <- which(is.infinite(X[, v]))
-  if(length(o) > 0) X <- X[-o, ]
-}
-# clean up
-comp.funda <- X
-rm(X)
-gc()
-# winsorize
-X <- comp.funda[,c('gvkey', 'fyear')]
-for(x in model.vars){
-  X1 <- wins.df(comp.funda[,c("gvkey", "fyear", x)], var=x, firmid="gvkey", yearid="fyear" )
-  X <- merge(X, X1, by=c("gvkey", "fyear"))  
-}
-compa <- X
-rm(X)
-
-## lead roa
-## Create a dataset with the last fiscal year for a given company (indexed by 
-## gvkey). This will be useful after creating the one-year ahead value for a 
-## variable. After the lead has been generated, delete all observations that
-## are the last time-series observation for that variable. Otherwise the "lead"
-## value will actually belong to the next firm (indexed by gvkey).
-last.fyear <- aggregate(comp.funda$fyear, by  = list(comp.funda$gvkey), FUN = max)
-names(last.fyear) <- c('gvkey', 'fyear')
-last.fyear$last <- 1
-comp.funda <- merge(comp.funda, last.fyear, all.x = TRUE)
-comp.funda$last <- ifelse(is.na(comp.funda$last), 0, comp.funda$last)
-
-compa <- merge(compa, comp.funda[, c('gvkey', 'fyear', 'last')])
-compa$roa.lead1 <- lead(compa$roa)
-compa$roa.lead1 <- ifelse(compa$last == 1, NA, compa$roa.lead1)
-
-## lead net income
-compa$ni.lead1 <- lead(compa$ni)
-compa$ni.lead1 <- ifelse(compa$last == 1, NA, compa$ni.lead1)
-
-compa$last <- NULL
-save(compa, file = 'data/compa.RData')
-
-## Get summary statistics
-sumstats <- get.summary.stats2(compa, model.vars)
-sumstats$nmiss.pct <- as.numeric(sumstats$N)
-
-## Investigate missingness
-n <- nrow(compa)
-nmiss.pct <- function(v) length(which(is.na(v)))/n
-missing.pct <- round(sapply(compa, FUN = nmiss.pct), 3)
-names(which( missing.pct > .2))
-
-roaout <- capture.output(sumstats)
-cat("comp_funda_summary", out, file="comp_funda_summary.txt", sep="\n", append=FALSE)
-

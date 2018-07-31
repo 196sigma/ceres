@@ -1,6 +1,6 @@
 ## Reginald Edwards
 ## 11 June 2018
-## 16 June 2018
+## 17 July 2018
 ## Import quarterly Compustat fundamentals data
 ## Clean and filter the data
 ## Generate features for modeling
@@ -11,8 +11,8 @@ rm(list=ls())
 gc()
 library(RPostgres)
 source("../0_code/useful-fn.R")
-
-#wrds <- dbConnect(Postgres(),  host='wrds-pgdata.wharton.upenn.edu', port=9737, user='reggie09', password='gbHjz5FV', sslmode='require', dbname='wrds')
+source('../0_datasets/wrds_login.R')
+#wrds <- dbConnect(Postgres(),  host='wrds-pgdata.wharton.upenn.edu', port=9737, user=wrds_user, password=wrds_pw, sslmode='require', dbname='wrds')
 
 ## Raw Compustat data are in a PostgresQL database "import.comp_fundq"
 localdb <- dbConnect(Postgres(), 

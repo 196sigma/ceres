@@ -28,7 +28,7 @@ dbClearResult(res)
 save(comp.funda, file = '0_datasets/comp_funda.RData')
 
 ###############################################################################
-load('../0_datasets/comp_funda.RData')
+load('data/comp_funda.RData')
 
 keep.vars <- c("gvkey", "datadate", "fyear", "fyr", "tic", "prcc_f", "seq", 
                "ceq", "txditc", "txdb", "itcb", "pstkrv", "pstkl", "pstk", "prcc_f", "csho", 
